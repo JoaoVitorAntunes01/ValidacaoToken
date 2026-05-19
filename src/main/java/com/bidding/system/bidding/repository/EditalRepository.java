@@ -65,6 +65,7 @@ public class EditalRepository {
             
             while(rs.next()){
                 EditalDTO edital = new EditalDTO();
+                edital.setId(rs.getLong("Id"));
                 edital.setTitulo(rs.getString("Titulo"));
                 edital.setDescricao(rs.getString("Descrição"));
                 edital.setStatus(rs.getString("Status"));

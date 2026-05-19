@@ -52,10 +52,24 @@ public class EditalController {
     }
     
     @GetMapping
-    public List<EditalDTO> listarTodos(@RequestHeader("Authorization") String auth){
-        
-        String token = auth.replace("Bearer", "");
-        return service.listarTodos(token);
-        
+    public List<EditalDTO> listarTodos
+            @RequestHeader("Authorization") String auth) {
+    
+    String token = auth.replace("Bearer", "");
+    
+    List<EditalDTO> lista = service.listarEditais(token);
+    return lista;
+    }
+            
+    @PostMapping("{id}/lances")
+    public String registrarLance(
+            @RequestHeader("Authorization") String auth,
+            @RequestBody LanceDTO lance,
+            @PathVariable Long id
+    ) {
+        String token = auth.replace("Bearer ", "");
+        service.criarLance(id, lance, token);
+        return "Lance Registrado com sucesso!";
     }
 }
+

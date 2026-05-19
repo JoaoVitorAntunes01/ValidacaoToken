@@ -10,6 +10,7 @@ package com.bidding.system.bidding.service;
 // Importa as classes necessárias para manipulação de tokens JWT e usuários
 import com.bidding.system.bidding.model.UserDTO;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -78,6 +79,17 @@ public class TokenService {
         user.setRole(claims.get("role", String.class));
         return user;
     }
+    
+       public boolean validToken(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(getKeySign())
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
 }
     
 

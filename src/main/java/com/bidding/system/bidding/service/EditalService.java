@@ -59,10 +59,11 @@ public class EditalService {
     }
     
     public List<EditalDTO> listarTodos(String token){
-        UserDTO userlogado = tokenService.extrairClaim(token);
-        
-        return repository.listarTodos();
-        
-        
+        if (tokenService.validToken(token)){
+            return repository.listEdital();
+        } else {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Necessario logar conta validada");
+        }
     }
 }
+
